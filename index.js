@@ -277,6 +277,7 @@ class ColorNote extends Note {
 
 }
 
+
 //let note = new Note();			   // error!
 let colorNote = new ColorNote();   // ok
 
@@ -309,3 +310,74 @@ const jobs = 'jobs';
 const result = myTag `Hello ${name} ${jobs}!`;
 
 console.log(result); //Output -> Result from myTag
+
+///////////////
+/* ES6 - let */
+///////////////
+
+// 1
+
+function varTest() {
+  var x = 1;
+  if (true) {
+    var x = 2;  // same variable!
+    console.log(x);  // 2
+  }
+  console.log(x);  // 2
+}
+
+function letTest() {
+  let x = 1;
+  if (true) {
+    let x = 2;  // different variable
+    console.log(x);  // 2
+  }
+  console.log(x);  // 1
+}
+
+// 2
+
+var r1 = 'global';
+let r2 = 'global';
+console.log(this.r1); // "global"     //doesn't work on stackblitz (this shold be window)
+console.log(this.r2); // undefined
+
+// 3 - Emulating private members
+
+var Thing;
+
+{
+  let privateScope = new WeakMap(); // can't be access outside the block
+  let counter = 0;
+
+  Thing = function() {
+    this.someProperty = 'foo';
+    
+    privateScope.set(this, {
+      hidden: ++counter,
+    });
+  };
+
+  Thing.prototype.showPublic = function() {
+    return this.someProperty;
+  };
+
+  Thing.prototype.showPrivate = function() {
+    return privateScope.get(this).hidden;
+  };
+}
+
+console.log("privateSscope:", typeof privateScope); // "undefined"
+console.log("counter:", typeof counter); // "undefined"
+
+var thing = new Thing();
+
+// Thing {someProperty: "foo"}
+// Note that we can't see "hidden" in the console
+console.log(thing); 
+
+console.log(thing.showPublic()); // "foo"
+console.log(thing.someProperty); // "foo" -> direct access
+console.log(thing.showPrivate()); // 1
+
+
