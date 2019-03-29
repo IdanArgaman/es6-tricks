@@ -380,4 +380,35 @@ console.log(thing.showPublic()); // "foo"
 console.log(thing.someProperty); // "foo" -> direct access
 console.log(thing.showPrivate()); // 1
 
+// 5
+
+var a = 1;
+var b = 2;
+
+if (a === 1) {
+  var a = 11; // the scope is global
+  let b = 22; // the scope is inside the if-block
+
+  console.log(a);  // 11
+  console.log(b);  // 22
+} 
+
+console.log(a); // 11
+console.log(b); // 2
+
+///////////////
+/* let - TDZ */
+///////////////
+
+/* Unlike variables declared with var, which will start with the value undefined, 
+let variables are not initialized until their definition is evaluated. Accessing 
+the variable before the initialization results in a ReferenceError. The variable 
+is in a "temporal dead zone" from the start of the block until the initialization 
+is processed. */
+
+console.log(typeof undeclaredVariable);
+// results in a 'ReferenceError'
+console.log(typeof tdz);
+let tdz = 10;
+
 
