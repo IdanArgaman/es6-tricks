@@ -292,3 +292,20 @@ for (let teenageYear of range(13, 7)) {
     console.log(`Teenage angst @ ${teenageYear}!`);
 }
 
+//////////////////////////////////
+/* ES6 Tagged Template Literals */
+//////////////////////////////////
+
+const myTag = (literals, ...vals) => {
+  console.log('Literals:', literals); //Output -> Literals [ 'Hello ', '!' ]
+  console.log('Interpolation:', vals); //Output -> Interpolation Steve
+
+  return 'Result from myTag';
+};
+
+const name = 'Steve';
+const jobs = 'jobs';
+
+const result = myTag `Hello ${name} ${jobs}!`;
+
+console.log(result); //Output -> Result from myTag
