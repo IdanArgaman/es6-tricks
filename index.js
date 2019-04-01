@@ -2,6 +2,21 @@
 /* ES6 Tricks */
 /**************/
 
+/////////////////////////////////////////
+/* ES6 doesn't allow "let" replication */
+/////////////////////////////////////////
+
+(function () {
+  // Doesn't cause an error in stackblitz
+
+  let a;
+  // ...many lines later...
+
+  // SyntaxError: Identifier 'a' has already been declared
+  let a;
+
+})();
+
 ////////////////////////
 /* Nested Destructing */
 ////////////////////////
@@ -14,7 +29,7 @@ const user = {
     degree: 'Masters'
   }
 };
-const {education: {degree}} = user;
+const { education: { degree } } = user;
 
 console.log(degree); //prints: Masters
 
@@ -22,21 +37,21 @@ console.log(degree); //prints: Masters
 /* Dynamic Property Names */
 ////////////////////////////
 
-let  city= 'sheffield_';
+let city = 'sheffield_';
 
 let a = {
-    [ city + 'population' ]: 350000
+  [city + 'population']: 350000
 };
 
-a[ city + 'county' ] = 'South Yorkshire';
+a[city + 'county'] = 'South Yorkshire';
 
-console.log(a); 
+console.log(a);
 
 ///////////////////////////////////
 /* Enforcing required parameters */
 ///////////////////////////////////
 
-const required = () => {throw new Error('Missing parameter')};
+const required = () => { throw new Error('Missing parameter') };
 
 //The below function will throw an error if either "a" or "b" is missing.
 
@@ -50,9 +65,9 @@ add(1, 2) //3
 
 const numbers = [10, 20, 30, 40];
 const doubledOver50 = numbers.reduce((finalList /* accamulator */, num) => {
-  
+
   num = num * 2; //double each number (i.e. map)
-  
+
   //filter number > 50
   if (num > 50) {
     finalList.push(num);
@@ -67,9 +82,9 @@ doubledOver50; // [60, 80]
 /* Using reduce to count items in array */
 //////////////////////////////////////////
 
-var cars = ['BMW','Benz', 'Benz', 'Tesla', 'BMW', 'Toyota'];
-var carsObj = cars.reduce(function (obj, name) { 
-   obj[name] = obj[name] ? /* note ! */ ++obj[name] : 1;
+var cars = ['BMW', 'Benz', 'Benz', 'Tesla', 'BMW', 'Toyota'];
+var carsObj = cars.reduce(function (obj, name) {
+  obj[name] = obj[name] ? /* note ! */ ++obj[name] : 1;
   return obj;
 }, {});
 
@@ -79,16 +94,16 @@ console.log(carsObj); // => { BMW: 2, Benz: 2, Tesla: 1, Toyota: 1 }
 /* Removing unwanted properties from an object */
 /////////////////////////////////////////////////
 
-let {_internal, tooBig, ...cleanObject} = {el1: '1', _internal:"secret", tooBig:{}, el2: '2', el3: '3'};
+let { _internal, tooBig, ...cleanObject } = { el1: '1', _internal: "secret", tooBig: {}, el2: '2', el3: '3' };
 console.log(cleanObject); // {el1: '1', el2: '2', el3: '3'}
 
 ///////////////////
 /* Merge objects */
 ///////////////////
 
-let object1 = { a:1, b:2,c:3 }
-let object2 = { b:30, c:40, d:50}
-let merged = {...object1, ...object2} //spread and re-add into merged
+let object1 = { a: 1, b: 2, c: 3 }
+let object2 = { b: 30, c: 40, d: 50 }
+let merged = { ...object1, ...object2 } //spread and re-add into merged
 console.log(merged) // {a:1, b:30, c:40, d:50}
 
 ////////////////////////////
@@ -102,7 +117,7 @@ let arr = [1, 1, 2, 2, 3, 3];
 /* Convert set to array and use array methods */
 ////////////////////////////////////////////////
 
-let mySet = new Set([1,2, 3, 4, 5]);
+let mySet = new Set([1, 2, 3, 4, 5]);
 //var filtered = [...mySet].filter((x) => x > 3) // [4, 5]
 
 ////////////////////
@@ -124,7 +139,7 @@ console.log(param2) // 1
 
 const arr = ['a', 'b', 'c'];
 for (const [index, elem] of /* Note */  arr.entries()) {
-    console.log(`index = ${index}, elem = ${elem}`);
+  console.log(`index = ${index}, elem = ${elem}`);
 }
 
 //////////////////////
@@ -157,19 +172,19 @@ var Rectangle = class /* note no name */ {
 // This is a function that returns class that extend the supplied class by 
 // adding a save method
 const Storage = Sup => class extends Sup {
-    save(database) {  }
+  save(database) { }
 };
 
 // This is a function that returns class that extend the supplied class by 
 // adding a validate method
 const Validation = Sup => class extends Sup {
-    validate(schema) { }
+  validate(schema) { }
 };
 
-class Person {  }
+class Person { }
 
 // Applying mixins on Person
-class Employee extends Storage(Validation(Person)) {  }
+class Employee extends Storage(Validation(Person)) { }
 
 //////////////////////////////////////////
 /* Log variable with its name and value */
@@ -178,7 +193,7 @@ class Employee extends Storage(Validation(Person)) {  }
 let myVar = 'foo';
 // output:
 // {myVar: "foo"}
-console.log({myVar});
+console.log({ myVar });
 
 //////////////////////////
 /* Coercing to a string */
@@ -190,17 +205,17 @@ let numString = `${num}`; // Replaces the old: let numString = num + '';
 
 // output:
 // {num: 2, numString: "2"}
-console.log({num, numString});
+console.log({ num, numString });
 
 ////////////////////////////////////////
 /* Enforcing maximum number of params */
 ////////////////////////////////////////
 
 function max(a, b, c, ...shouldBeEmpty) {
-	if (shouldBeEmpty.length > 0)
-		throw Error('max 3 parameters allowed!');
+  if (shouldBeEmpty.length > 0)
+    throw Error('max 3 parameters allowed!');
 
-	return Math.max(a, b, c);
+  return Math.max(a, b, c);
 };
 
 // not an error
@@ -218,13 +233,13 @@ max(4, 5, 6);
 // the timeout completes, the promise is rejected
 
 const timeout = (delay = 30000) => {
-    return new Promise((resolve, reject) => {
-        let rejectWithError = () => {
-            reject(new Error('Timed out!'));
-        };
+  return new Promise((resolve, reject) => {
+    let rejectWithError = () => {
+      reject(new Error('Timed out!'));
+    };
 
-        setTimeout(rejectWithError, delay);
-    });
+    setTimeout(rejectWithError, delay);
+  });
 }
 
 // Return a promise that will be fulfilled if
@@ -232,12 +247,12 @@ const timeout = (delay = 30000) => {
 // is rejected.
 
 const fetchWithTimeout = (url, delay = 3000) => {
-	// construct an array to pass to `Promise.race`
+  // construct an array to pass to `Promise.race`
   // !!!!!!!!!!!!!NOTE!!!!!!!!!!!!
-	return Promise.race([
-		fetch(url),
-		timeout(delay)
-	]);
+  return Promise.race([
+    fetch(url),
+    timeout(delay)
+  ]);
 }
 
 // Make an XHR request for the URL that has to
@@ -245,16 +260,16 @@ const fetchWithTimeout = (url, delay = 3000) => {
 // happens
 
 fetchWithTimeout('/json/data.json', 1000)
-    .then(response => {
-    	// successful response before the 1 s timeout
-    	console.log('successful response', response)
-    })
-    .catch((e) => {
-    	// Either the timeout occurred or some other error.
-    	// Would need to check the method or use a custom
-    	// `Error` subclass in `timeout`
-    	console.error('request error', e);
-    });
+  .then(response => {
+    // successful response before the 1 s timeout
+    console.log('successful response', response)
+  })
+  .catch((e) => {
+    // Either the timeout occurred or some other error.
+    // Would need to check the method or use a custom
+    // `Error` subclass in `timeout`
+    console.error('request error', e);
+  });
 
 
 /////////////////////////////
@@ -267,11 +282,11 @@ fetchWithTimeout('/json/data.json', 1000)
    new.target is undefined */
 
 class Note {
-	constructor() {
-		if (new.target === Note) {  /* Did the Note consturctor was used ??? */
-			throw new Error('Note cannot be directly constructed.')
-		}
-	}
+  constructor() {
+    if (new.target === Note) {  /* Did the Note consturctor was used ??? */
+      throw new Error('Note cannot be directly constructed.')
+    }
+  }
 }
 class ColorNote extends Note {
 
@@ -284,13 +299,13 @@ let colorNote = new ColorNote();   // ok
 /* Lazy range function */
 
 function* range(start, count) {
-    for (let delta = 0; delta < count; delta++) {
-        yield start + delta;
-    }
+  for (let delta = 0; delta < count; delta++) {
+    yield start + delta;
+  }
 }
 
 for (let teenageYear of range(13, 7)) {
-    console.log(`Teenage angst @ ${teenageYear}!`);
+  console.log(`Teenage angst @ ${teenageYear}!`);
 }
 
 //////////////////////////////////
@@ -307,7 +322,7 @@ const myTag = (literals, ...vals) => {
 const name = 'Steve';
 const jobs = 'jobs';
 
-const result = myTag `Hello ${name} ${jobs}!`;
+const result = myTag`Hello ${name} ${jobs}!`;
 
 console.log(result); //Output -> Result from myTag
 
@@ -350,19 +365,19 @@ var Thing;
   let privateScope = new WeakMap(); // can't be access outside the block
   let counter = 0;
 
-  Thing = function() {
+  Thing = function () {
     this.someProperty = 'foo';
-    
+
     privateScope.set(this, {
       hidden: ++counter,
     });
   };
 
-  Thing.prototype.showPublic = function() {
+  Thing.prototype.showPublic = function () {
     return this.someProperty;
   };
 
-  Thing.prototype.showPrivate = function() {
+  Thing.prototype.showPrivate = function () {
     return privateScope.get(this).hidden;
   };
 }
@@ -374,7 +389,7 @@ var thing = new Thing();
 
 // Thing {someProperty: "foo"}
 // Note that we can't see "hidden" in the console
-console.log(thing); 
+console.log(thing);
 
 console.log(thing.showPublic()); // "foo"
 console.log(thing.someProperty); // "foo" -> direct access
@@ -391,7 +406,7 @@ if (a === 1) {
 
   console.log(a);  // 11
   console.log(b);  // 22
-} 
+}
 
 console.log(a); // 11
 console.log(b); // 2
