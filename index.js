@@ -380,7 +380,7 @@ console.log(thing.showPublic()); // "foo"
 console.log(thing.someProperty); // "foo" -> direct access
 console.log(thing.showPrivate()); // 1
 
-// 5
+// 4
 
 var a = 1;
 var b = 2;
