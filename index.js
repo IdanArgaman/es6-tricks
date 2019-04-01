@@ -411,4 +411,3 @@ console.log(typeof undeclaredVariable);
 console.log(typeof tdz);
 let tdz = 10;
 
-
